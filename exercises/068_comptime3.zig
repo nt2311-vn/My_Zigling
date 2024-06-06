@@ -28,7 +28,7 @@ const Schooner = struct {
     mainmast_height: u32 = 95,
 
     fn scaleMe(self: *Schooner, comptime scale: u32) void {
-        comptime var my_scale = scale;
+        var my_scale = scale;
 
         // We did something neat here: we've anticipated the
         // possibility of accidentally attempting to create a
@@ -43,7 +43,7 @@ const Schooner = struct {
         //
         // Please change this so that it sets a 0 scale to 1
         // instead.
-        if (my_scale == 0) @compileError("Scale 1:0 is not valid!");
+        if (my_scale == 0) my_scale = 1;
 
         self.scale = my_scale;
         self.hull_length /= my_scale;
@@ -69,7 +69,7 @@ pub fn main() void {
     // Hey, we can't just pass this runtime variable as an
     // argument to the scaleMe() method. What would let us do
     // that?
-    var scale: u32 = undefined;
+    comptime var scale = 0;
 
     scale = 32; // 1:32 scale
 
